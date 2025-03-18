@@ -1,14 +1,19 @@
-import "./App.css";
 import TaskInput from "./components/TaskInput";
 import { useState, useEffect } from "react";
 import { Task } from "./modal";
 import taskListStyles from "./components/Tasklist.module.css";
-import { DragDropContext, Draggable, Droppable, DropResult } from "react-beautiful-dnd";
+import {
+  DragDropContext,
+  Draggable,
+  Droppable,
+  DropResult,
+} from "react-beautiful-dnd";
 import { GiCheckMark } from "react-icons/gi";
 import { GoDash } from "react-icons/go";
 import { MdDeleteForever } from "react-icons/md";
 import { CiEdit } from "react-icons/ci";
 import taskStyles from "./components/Task.module.css";
+import { FaRegCircle } from "react-icons/fa";
 
 function App() {
   const [task, setTask] = useState<string>("");
@@ -70,33 +75,36 @@ function App() {
       )
     );
   };
-  const onDragEnd = (result:DropResult) => {
+  const onDragEnd = (result: DropResult) => {
     const { destination, source } = result;
 
-  // If dropped outside the droppable area
-  if (!destination) return;
+    // If dropped outside the droppable area
+    if (!destination) return;
 
-  // If the item is dropped in the same position
-  if (destination.droppableId === source.droppableId && destination.index === source.index) {
-    return;
-  }
+    // If the item is dropped in the same position
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      return;
+    }
 
-  // Create a copy of the tasks array to modify
-  const updatedTasks = Array.from(tasks);
-  const [draggedTask] = updatedTasks.splice(source.index, 1); // Remove the dragged task from its original position
-   console.log(destination, source, draggedTask.isDone)
-  // Update the task's `isDone` status based on where it's dropped
-  if (destination.droppableId === "uncheckedTasks") {
-    draggedTask.isDone = false;
-  } else if (destination.droppableId === "checkedTasks") {
-    draggedTask.isDone = true;
-  }
+    // Create a copy of the tasks array to modify
+    const updatedTasks = Array.from(tasks);
+    const [draggedTask] = updatedTasks.splice(source.index, 1); // Remove the dragged task from its original position
+    console.log(destination, source, draggedTask.isDone);
+    // Update the task's `isDone` status based on where it's dropped
+    if (destination.droppableId === "uncheckedTasks") {
+      draggedTask.isDone = false;
+    } else if (destination.droppableId === "checkedTasks") {
+      draggedTask.isDone = true;
+    }
 
-  // Reinsert the task in the new position
-  updatedTasks.splice(destination.index, 0, draggedTask);
+    // Reinsert the task in the new position
+    updatedTasks.splice(destination.index, 0, draggedTask);
 
-  // Update the state with the new task list
-  setTasks(updatedTasks);
+    // Update the state with the new task list
+    setTasks(updatedTasks);
   };
 
   return (
@@ -104,7 +112,7 @@ function App() {
       <TaskInput task={task} setTask={setTask} handleSubmit={handleSubmit} />
       <div className={taskListStyles.tasklist}>
         <DragDropContext onDragEnd={onDragEnd}>
-          <div>
+          <div className={taskListStyles.column}>
             <h2>Unchecked Tasks</h2>
             <Droppable
               droppableId="uncheckedTasks"
@@ -156,22 +164,49 @@ function App() {
                                 >
                                   <CiEdit color="yellow" />
                                 </button>
+                                <FaRegCircle
+                                  className={taskStyles.task__point}
+                                  color="yellow"
+                                  size={8}
+                                  onClick={() => handleEdit(t.id)}
+                                />
                                 <button
                                   className={taskStyles.task__btn}
                                   onClick={() => handleDelete(t.id)}
                                 >
                                   <MdDeleteForever color="red" />
                                 </button>
+                                <FaRegCircle
+                                  className={taskStyles.task__point}
+                                  color="red"
+                                  size={8}
+                                  onClick={() => handleDelete(t.id)}
+                                />
                                 <button
                                   className={taskStyles.task__btn}
                                   onClick={() => handleCheck(t.id)}
                                 >
                                   {t.isDone ? (
-                                    <GiCheckMark color="green" />
+                                      <GiCheckMark color="green" />
                                   ) : (
-                                    <GoDash />
+                                      <GoDash />
                                   )}
                                 </button>
+                                {t.isDone ? (
+                                  <FaRegCircle
+                                    className={taskStyles.task__point}
+                                    color="green"
+                                    size={8}
+                                    onClick={() => handleCheck(t.id)}
+                                  />
+                                ) : (
+                                  <FaRegCircle
+                                    className={taskStyles.task__point}
+                                    color="blue"
+                                    size={8}
+                                    onClick={() => handleCheck(t.id)}
+                                  />
+                                )}
                               </div>
                             </>
                           )}
@@ -185,7 +220,7 @@ function App() {
               )}
             </Droppable>
           </div>
-          <div>
+          <div className={taskListStyles.column}>
             <h2>checked Tasks</h2>
             <Droppable
               droppableId="checkedTasks"
@@ -194,10 +229,10 @@ function App() {
               ignoreContainerClipping={false}
             >
               {(provided) => (
-                <div 
-                ref={provided.innerRef} // Always pass provided.innerRef to the container
-                {...provided.droppableProps} // Add droppableProps to the container
-                className={taskListStyles.column}
+                <div
+                  ref={provided.innerRef} // Always pass provided.innerRef to the container
+                  {...provided.droppableProps} // Add droppableProps to the container
+                  className={taskListStyles.column}
                 >
                   {checkedTasks.map((t, index) => (
                     <Draggable
