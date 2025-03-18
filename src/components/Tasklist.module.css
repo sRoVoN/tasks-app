@@ -1,0 +1,30 @@
+.tasklist{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    background-color: orange;
+    justify-content: center;
+    padding: 5rem;
+}
+.column {
+    padding: 3rem;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .column h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  @media screen and (max-width: 1024px){
+    .tasklist{
+        grid-template-columns: 1fr;
+    }
+    .column h2{
+        font-size: large;
+        font-weight: 800;
+    }
+    .column h3{
+        font-size: small;
+        font-weight: 400;
+    }
+  }

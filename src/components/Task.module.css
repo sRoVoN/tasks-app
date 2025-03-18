@@ -1,0 +1,36 @@
+.task{
+    display: flex;
+    flex-direction: column;
+    height: 5.5rem;
+    padding: 1rem;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    cursor: pointer;
+    border-radius: 14px;
+    margin: 1rem;
+}
+.task:hover{
+    background-color: rgb(243, 216, 63);
+}
+.task__btn{
+    padding: 0.3rem;
+    margin: 0.1rem;
+    transition: transform ease-out;
+}
+.task__btn:hover{
+ transform: scale(1.15);
+}
+.task__input{
+    padding: 0.8rem;
+    outline: none;
+    border-radius: 14px;
+    color: aqua;
+    margin-right: 5px;
+}
+.task__savebtn{
+    padding: 0.7rem;
+    border-radius: 14px;
+    transition: transform ease-out;
+}
+.task__savebtn:hover{
+ transform: scale(1.10);
+}
