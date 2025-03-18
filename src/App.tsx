@@ -267,27 +267,54 @@ function App() {
                               <h3>{t.task}</h3>
                               <div>
                                 <button
-                                  className={`${taskStyles.task__btn}`}
+                                  className={taskStyles.task__btn}
                                   onClick={() => handleEdit(t.id)}
                                 >
                                   <CiEdit color="yellow" />
                                 </button>
+                                <FaRegCircle
+                                  className={taskStyles.task__point}
+                                  color="yellow"
+                                  size={8}
+                                  onClick={() => handleEdit(t.id)}
+                                />
                                 <button
-                                  className={`${taskStyles.task__btn}`}
+                                  className={taskStyles.task__btn}
                                   onClick={() => handleDelete(t.id)}
                                 >
                                   <MdDeleteForever color="red" />
                                 </button>
+                                <FaRegCircle
+                                  className={taskStyles.task__point}
+                                  color="red"
+                                  size={8}
+                                  onClick={() => handleDelete(t.id)}
+                                />
                                 <button
-                                  className={`${taskStyles.task__btn}`}
+                                  className={taskStyles.task__btn}
                                   onClick={() => handleCheck(t.id)}
                                 >
                                   {t.isDone ? (
-                                    <GiCheckMark color="green" />
+                                      <GiCheckMark color="green" />
                                   ) : (
-                                    <GoDash />
+                                      <GoDash />
                                   )}
                                 </button>
+                                {t.isDone ? (
+                                  <FaRegCircle
+                                    className={taskStyles.task__point}
+                                    color="green"
+                                    size={8}
+                                    onClick={() => handleCheck(t.id)}
+                                  />
+                                ) : (
+                                  <FaRegCircle
+                                    className={taskStyles.task__point}
+                                    color="blue"
+                                    size={8}
+                                    onClick={() => handleCheck(t.id)}
+                                  />
+                                )}
                               </div>
                             </>
                           )}
