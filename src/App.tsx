@@ -70,7 +70,7 @@ function App() {
       )
     );
   };
-  const onDragEnd = (result: DropResult) => {
+  const onDragEnd = (result:DropResult) => {
     const { destination, source } = result;
 
   // If dropped outside the droppable area
