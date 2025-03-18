@@ -11,6 +11,10 @@
 .task:hover{
     background-color: #ca8505c5;
 }
+.task__buttons{
+    display: flex;
+    flex-direction: row;
+}
 .task__btn{
     padding: 0.3rem;
     margin: 0.1rem;

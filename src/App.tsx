@@ -157,7 +157,7 @@ function App() {
                           ) : (
                             <>
                               <h3>{t.task}</h3>
-                              <div>
+                              <div className={taskStyles.task__buttons}>
                                 <button
                                   className={taskStyles.task__btn}
                                   onClick={() => handleEdit(t.id)}
